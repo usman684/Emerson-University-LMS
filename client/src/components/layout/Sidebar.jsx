@@ -8,6 +8,8 @@ import {
   CalendarCheck,
   GraduationCap,
   Settings,
+  ClipboardList,
+  Award,
   X,
 } from "lucide-react";
 import { ROLES } from "../../lib/roles";
@@ -17,11 +19,15 @@ const navByRole = {
     { to: "/dashboard/student", label: "Overview", icon: LayoutDashboard, end: true },
     { to: "/dashboard/student/courses", label: "My Courses", icon: BookOpen },
     { to: "/dashboard/student/attendance", label: "Attendance", icon: CalendarCheck },
+    { to: "/dashboard/student/assignments", label: "Assignments", icon: ClipboardList },
+    { to: "/dashboard/student/grades", label: "Grades", icon: Award },
   ],
   [ROLES.TEACHER]: [
     { to: "/dashboard/teacher", label: "Overview", icon: LayoutDashboard, end: true },
     { to: "/dashboard/teacher/courses", label: "My Courses", icon: BookOpen },
     { to: "/dashboard/teacher/attendance", label: "Attendance", icon: CalendarCheck },
+    { to: "/dashboard/teacher/assignments", label: "Assignments", icon: ClipboardList },
+    { to: "/dashboard/teacher/grades", label: "Grades", icon: Award },
     { to: "/dashboard/teacher/students", label: "Students", icon: Users },
   ],
   [ROLES.ADMIN]: [

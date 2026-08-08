@@ -32,6 +32,7 @@ export const getCourses = asyncHandler(async (req, res) => {
     Course.find(filter)
       .populate("department", "name code")
       .populate("instructor", "firstName lastName email")
+      .populate("enrolledStudents.student", "firstName lastName email")
       .select("-materials")
       .sort({ createdAt: -1 })
       .skip(skip)
