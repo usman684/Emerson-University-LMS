@@ -10,6 +10,7 @@ import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import departmentRoutes from "./routes/department.routes.js";
 import courseRoutes from "./routes/course.routes.js";
+import attendanceRoutes from "./routes/attendance.routes.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.middleware.js";
 import { globalLimiter } from "./middleware/rateLimiter.middleware.js";
 
@@ -54,6 +55,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/departments", departmentRoutes);
 app.use("/api/courses", courseRoutes);
+app.use("/api/attendance", attendanceRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -18,6 +18,8 @@ import RegistrarDashboard from "./pages/dashboard/RegistrarDashboard";
 import StudentCoursesPage from "./pages/dashboard/StudentCoursesPage";
 import TeacherCoursesPage from "./pages/dashboard/TeacherCoursesPage";
 import AdminCoursesPage from "./pages/dashboard/AdminCoursesPage";
+import StudentAttendancePage from "./pages/dashboard/StudentAttendancePage";
+import TeacherAttendancePage from "./pages/dashboard/TeacherAttendancePage";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import RoleRoute from "./routes/RoleRoute";
@@ -43,11 +45,13 @@ function App() {
           <Route element={<RoleRoute allowedRoles={[ROLES.STUDENT]} />}>
             <Route path="/dashboard/student" element={<StudentDashboard />} />
             <Route path="/dashboard/student/courses" element={<StudentCoursesPage />} />
+            <Route path="/dashboard/student/attendance" element={<StudentAttendancePage />} />
           </Route>
 
           <Route element={<RoleRoute allowedRoles={[ROLES.TEACHER]} />}>
             <Route path="/dashboard/teacher" element={<TeacherDashboard />} />
             <Route path="/dashboard/teacher/courses" element={<TeacherCoursesPage />} />
+            <Route path="/dashboard/teacher/attendance" element={<TeacherAttendancePage />} />
           </Route>
 
           <Route element={<RoleRoute allowedRoles={[ROLES.ADMIN]} />}>

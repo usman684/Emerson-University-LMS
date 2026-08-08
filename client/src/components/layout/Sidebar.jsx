@@ -21,6 +21,7 @@ const navByRole = {
   [ROLES.TEACHER]: [
     { to: "/dashboard/teacher", label: "Overview", icon: LayoutDashboard, end: true },
     { to: "/dashboard/teacher/courses", label: "My Courses", icon: BookOpen },
+    { to: "/dashboard/teacher/attendance", label: "Attendance", icon: CalendarCheck },
     { to: "/dashboard/teacher/students", label: "Students", icon: Users },
   ],
   [ROLES.ADMIN]: [
