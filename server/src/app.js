@@ -13,6 +13,7 @@ import courseRoutes from "./routes/course.routes.js";
 import attendanceRoutes from "./routes/attendance.routes.js";
 import assignmentRoutes from "./routes/assignment.routes.js";
 import gradeRoutes from "./routes/grade.routes.js";
+import feeRoutes from "./routes/fee.routes.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.middleware.js";
 import { globalLimiter } from "./middleware/rateLimiter.middleware.js";
 
@@ -60,6 +61,7 @@ app.use("/api/courses", courseRoutes);
 app.use("/api/attendance", attendanceRoutes);
 app.use("/api/assignments", assignmentRoutes);
 app.use("/api/grades", gradeRoutes);
+app.use("/api/fees", feeRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -24,6 +24,8 @@ import StudentAssignmentsPage from "./pages/dashboard/StudentAssignmentsPage";
 import TeacherAssignmentsPage from "./pages/dashboard/TeacherAssignmentsPage";
 import StudentGradesPage from "./pages/dashboard/StudentGradesPage";
 import TeacherGradesPage from "./pages/dashboard/TeacherGradesPage";
+import StudentFeesPage from "./pages/dashboard/StudentFeesPage";
+import AdminFeesPage from "./pages/dashboard/AdminFeesPage";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import RoleRoute from "./routes/RoleRoute";
@@ -52,6 +54,7 @@ function App() {
             <Route path="/dashboard/student/attendance" element={<StudentAttendancePage />} />
             <Route path="/dashboard/student/assignments" element={<StudentAssignmentsPage />} />
             <Route path="/dashboard/student/grades" element={<StudentGradesPage />} />
+            <Route path="/dashboard/student/fees" element={<StudentFeesPage />} />
           </Route>
 
           <Route element={<RoleRoute allowedRoles={[ROLES.TEACHER]} />}>
@@ -65,6 +68,7 @@ function App() {
           <Route element={<RoleRoute allowedRoles={[ROLES.ADMIN]} />}>
             <Route path="/dashboard/admin" element={<AdminDashboard />} />
             <Route path="/dashboard/admin/courses" element={<AdminCoursesPage />} />
+            <Route path="/dashboard/admin/fees" element={<AdminFeesPage />} />
           </Route>
 
           <Route element={<RoleRoute allowedRoles={[ROLES.REGISTRAR]} />}>

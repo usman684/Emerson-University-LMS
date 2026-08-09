@@ -10,6 +10,7 @@ import {
   Settings,
   ClipboardList,
   Award,
+  Wallet,
   X,
 } from "lucide-react";
 import { ROLES } from "../../lib/roles";
@@ -21,6 +22,7 @@ const navByRole = {
     { to: "/dashboard/student/attendance", label: "Attendance", icon: CalendarCheck },
     { to: "/dashboard/student/assignments", label: "Assignments", icon: ClipboardList },
     { to: "/dashboard/student/grades", label: "Grades", icon: Award },
+    { to: "/dashboard/student/fees", label: "Fees", icon: Wallet },
   ],
   [ROLES.TEACHER]: [
     { to: "/dashboard/teacher", label: "Overview", icon: LayoutDashboard, end: true },
@@ -33,6 +35,7 @@ const navByRole = {
   [ROLES.ADMIN]: [
     { to: "/dashboard/admin", label: "Overview", icon: LayoutDashboard, end: true },
     { to: "/dashboard/admin/courses", label: "Courses", icon: BookOpen },
+    { to: "/dashboard/admin/fees", label: "Fees", icon: Wallet },
     { to: "/dashboard/admin/users", label: "Users", icon: Users },
     { to: "/dashboard/admin/departments", label: "Departments", icon: Building2 },
     { to: "/dashboard/admin/settings", label: "Settings", icon: Settings },
