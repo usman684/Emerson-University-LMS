@@ -9,6 +9,7 @@ import { useLogoutMutation } from "../../features/auth/authApiSlice";
 import { clearCredentials } from "../../features/auth/authSlice";
 import { setAccessToken } from "../../lib/axios";
 import { ROLE_LABELS } from "../../lib/roles";
+import NotificationBell from "./NotificationBell";
 
 const Topbar = ({ user, onMenuClick }) => {
   const { theme, toggleTheme } = useTheme();
@@ -50,6 +51,8 @@ const Topbar = ({ user, onMenuClick }) => {
         >
           {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
         </button>
+
+        <NotificationBell />
 
         <div className="relative">
           <button

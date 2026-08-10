@@ -4,6 +4,7 @@ import Grade from "../models/Grade.model.js";
 import { scoreToGrade } from "../models/Grade.model.js";
 import Course from "../models/Course.model.js";
 import { ROLES } from "../config/roles.js";
+import { notifyUser } from "../services/notification.service.js";
 
 const assertCanManage = (course, user) => {
   if (
@@ -60,6 +61,14 @@ export const assignGrade = asyncHandler(async (req, res) => {
     enrollment.status = "completed";
     await course.save();
   }
+
+  await notifyUser({
+    recipient: student,
+    title: "Grade posted",
+    message: `Your final grade for ${course.code} has been posted: ${letter} (${percentage}%).`,
+    type: "grade",
+    link: "/dashboard/student/grades",
+  });
 
   res.status(200).json({ success: true, data: { grade } });
 });

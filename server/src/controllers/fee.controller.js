@@ -4,6 +4,7 @@ import ApiError from "../utils/ApiError.js";
 import Fee from "../models/Fee.model.js";
 import User from "../models/User.model.js";
 import { ROLES } from "../config/roles.js";
+import { notifyUser } from "../services/notification.service.js";
 
 const generateInvoiceNumber = () => {
   const random = crypto.randomBytes(3).toString("hex").toUpperCase();
@@ -33,6 +34,14 @@ export const createFee = asyncHandler(async (req, res) => {
     dueDate,
     invoiceNumber: generateInvoiceNumber(),
     createdBy: req.user._id,
+  });
+
+  await notifyUser({
+    recipient: student,
+    title: "New fee challan issued",
+    message: `A ${feeType} fee of $${amount} has been issued. Due ${new Date(dueDate).toLocaleDateString()}.`,
+    type: "fee",
+    link: "/dashboard/student/fees",
   });
 
   res.status(201).json({ success: true, data: { fee } });

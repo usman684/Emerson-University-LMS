@@ -3,6 +3,7 @@ import ApiError from "../utils/ApiError.js";
 import Assignment from "../models/Assignment.model.js";
 import Course from "../models/Course.model.js";
 import { ROLES } from "../config/roles.js";
+import { notifyUsers } from "../services/notification.service.js";
 
 const assertCanManage = (course, user) => {
   if (
@@ -40,6 +41,18 @@ export const createAssignment = asyncHandler(async (req, res) => {
     totalMarks,
     type,
     createdBy: req.user._id,
+  });
+
+  const recipientIds = course.enrolledStudents
+    .filter((e) => e.status === "active")
+    .map((e) => e.student);
+
+  await notifyUsers({
+    recipients: recipientIds,
+    title: `New ${type || "assignment"} posted`,
+    message: `${title} has been posted for ${course.code}. Due ${new Date(dueDate).toLocaleDateString()}.`,
+    type: "assignment",
+    link: "/dashboard/student/assignments",
   });
 
   res.status(201).json({ success: true, data: { assignment } });
