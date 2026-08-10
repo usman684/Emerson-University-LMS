@@ -14,6 +14,7 @@ import {
   Library,
   Home,
   Bus,
+  BarChart3,
   X,
 } from "lucide-react";
 import { ROLES } from "../../lib/roles";
@@ -45,6 +46,7 @@ const navByRole = {
     { to: "/dashboard/admin/library", label: "Library", icon: Library },
     { to: "/dashboard/admin/hostel", label: "Hostel", icon: Home },
     { to: "/dashboard/admin/transport", label: "Transport", icon: Bus },
+    { to: "/dashboard/admin/analytics", label: "Analytics", icon: BarChart3 },
     { to: "/dashboard/admin/users", label: "Users", icon: Users },
     { to: "/dashboard/admin/departments", label: "Departments", icon: Building2 },
     { to: "/dashboard/admin/settings", label: "Settings", icon: Settings },

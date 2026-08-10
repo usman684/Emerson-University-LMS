@@ -32,6 +32,7 @@ import StudentHostelPage from "./pages/dashboard/StudentHostelPage";
 import AdminHostelPage from "./pages/dashboard/AdminHostelPage";
 import StudentTransportPage from "./pages/dashboard/StudentTransportPage";
 import AdminTransportPage from "./pages/dashboard/AdminTransportPage";
+import AdminAnalyticsPage from "./pages/dashboard/AdminAnalyticsPage";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import RoleRoute from "./routes/RoleRoute";
@@ -81,6 +82,7 @@ function App() {
             <Route path="/dashboard/admin/library" element={<AdminLibraryPage />} />
             <Route path="/dashboard/admin/hostel" element={<AdminHostelPage />} />
             <Route path="/dashboard/admin/transport" element={<AdminTransportPage />} />
+            <Route path="/dashboard/admin/analytics" element={<AdminAnalyticsPage />} />
           </Route>
 
           <Route element={<RoleRoute allowedRoles={[ROLES.REGISTRAR]} />}>
