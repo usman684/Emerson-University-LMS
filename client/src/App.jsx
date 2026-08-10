@@ -28,6 +28,10 @@ import StudentFeesPage from "./pages/dashboard/StudentFeesPage";
 import AdminFeesPage from "./pages/dashboard/AdminFeesPage";
 import StudentLibraryPage from "./pages/dashboard/StudentLibraryPage";
 import AdminLibraryPage from "./pages/dashboard/AdminLibraryPage";
+import StudentHostelPage from "./pages/dashboard/StudentHostelPage";
+import AdminHostelPage from "./pages/dashboard/AdminHostelPage";
+import StudentTransportPage from "./pages/dashboard/StudentTransportPage";
+import AdminTransportPage from "./pages/dashboard/AdminTransportPage";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import RoleRoute from "./routes/RoleRoute";
@@ -58,6 +62,8 @@ function App() {
             <Route path="/dashboard/student/grades" element={<StudentGradesPage />} />
             <Route path="/dashboard/student/fees" element={<StudentFeesPage />} />
             <Route path="/dashboard/student/library" element={<StudentLibraryPage />} />
+            <Route path="/dashboard/student/hostel" element={<StudentHostelPage />} />
+            <Route path="/dashboard/student/transport" element={<StudentTransportPage />} />
           </Route>
 
           <Route element={<RoleRoute allowedRoles={[ROLES.TEACHER]} />}>
@@ -73,6 +79,8 @@ function App() {
             <Route path="/dashboard/admin/courses" element={<AdminCoursesPage />} />
             <Route path="/dashboard/admin/fees" element={<AdminFeesPage />} />
             <Route path="/dashboard/admin/library" element={<AdminLibraryPage />} />
+            <Route path="/dashboard/admin/hostel" element={<AdminHostelPage />} />
+            <Route path="/dashboard/admin/transport" element={<AdminTransportPage />} />
           </Route>
 
           <Route element={<RoleRoute allowedRoles={[ROLES.REGISTRAR]} />}>

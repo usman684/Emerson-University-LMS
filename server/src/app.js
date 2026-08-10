@@ -16,6 +16,8 @@ import gradeRoutes from "./routes/grade.routes.js";
 import feeRoutes from "./routes/fee.routes.js";
 import notificationRoutes from "./routes/notification.routes.js";
 import bookRoutes from "./routes/book.routes.js";
+import hostelRoutes from "./routes/hostel.routes.js";
+import transportRoutes from "./routes/transport.routes.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.middleware.js";
 import { globalLimiter } from "./middleware/rateLimiter.middleware.js";
 
@@ -66,6 +68,8 @@ app.use("/api/grades", gradeRoutes);
 app.use("/api/fees", feeRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/books", bookRoutes);
+app.use("/api/hostels", hostelRoutes);
+app.use("/api/transport", transportRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
