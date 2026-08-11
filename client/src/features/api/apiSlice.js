@@ -36,6 +36,7 @@ export const apiSlice = createApi({
     "Hostel",
     "Room",
     "Vehicle",
+    "Thread",
   ],
   endpoints: () => ({}),
 });

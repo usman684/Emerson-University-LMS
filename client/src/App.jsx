@@ -33,6 +33,7 @@ import AdminHostelPage from "./pages/dashboard/AdminHostelPage";
 import StudentTransportPage from "./pages/dashboard/StudentTransportPage";
 import AdminTransportPage from "./pages/dashboard/AdminTransportPage";
 import AdminAnalyticsPage from "./pages/dashboard/AdminAnalyticsPage";
+import ForumPage from "./pages/dashboard/ForumPage";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import RoleRoute from "./routes/RoleRoute";
@@ -65,6 +66,7 @@ function App() {
             <Route path="/dashboard/student/library" element={<StudentLibraryPage />} />
             <Route path="/dashboard/student/hostel" element={<StudentHostelPage />} />
             <Route path="/dashboard/student/transport" element={<StudentTransportPage />} />
+            <Route path="/dashboard/student/forum" element={<ForumPage />} />
           </Route>
 
           <Route element={<RoleRoute allowedRoles={[ROLES.TEACHER]} />}>
@@ -73,6 +75,7 @@ function App() {
             <Route path="/dashboard/teacher/attendance" element={<TeacherAttendancePage />} />
             <Route path="/dashboard/teacher/assignments" element={<TeacherAssignmentsPage />} />
             <Route path="/dashboard/teacher/grades" element={<TeacherGradesPage />} />
+            <Route path="/dashboard/teacher/forum" element={<ForumPage />} />
           </Route>
 
           <Route element={<RoleRoute allowedRoles={[ROLES.ADMIN]} />}>
