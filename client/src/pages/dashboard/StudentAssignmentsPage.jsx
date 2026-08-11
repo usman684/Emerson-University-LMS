@@ -7,6 +7,7 @@ import {
 } from "../../features/assignments/assignmentApiSlice";
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
+import FileUpload from "../../components/ui/FileUpload";
 
 const SubmitForm = ({ assignmentId, existing }) => {
   const [textAnswer, setTextAnswer] = useState(existing?.textAnswer || "");
@@ -41,6 +42,7 @@ const SubmitForm = ({ assignmentId, existing }) => {
         placeholder="Or paste a file link (Google Drive, etc.)"
         className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-white"
       />
+      <FileUpload folder="submissions" value={fileUrl} onUploaded={(url) => setFileUrl(url)} />
       <Button size="sm" onClick={handleSubmit} isLoading={isLoading} className="self-start">
         {existing ? "Resubmit" : "Submit"}
       </Button>

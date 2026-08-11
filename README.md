@@ -2,7 +2,9 @@
 
 A production-grade Learning Management System foundation for Emerson University, built with the MERN stack.
 
-> **Status:** All core modules complete. Auth, RBAC, User Management, Departments, Courses, Attendance, Assignments/Quizzes/Grades/CGPA, Fees/Finance, Notifications, Library, Hostel, Transport, Analytics/Reports, Discussion Forum, Calendar, and Website CMS (announcements + editable public site sections) are fully working end-to-end. Remaining optional enhancements: Socket.io real-time push (notifications currently poll every 30s) and real Cloudinary file uploads (materials/submissions currently accept URL links).
+> **Status:** All core modules complete, plus real Cloudinary file uploads. Auth, RBAC, User Management, Departments, Courses (with real file-upload course materials), Attendance, Assignments/Quizzes/Grades/CGPA (with real file-upload submissions), Fees/Finance, Notifications, Library, Hostel, Transport, Analytics/Reports, Discussion Forum, Calendar, and Website CMS are fully working end-to-end. Remaining optional enhancement: Socket.io real-time push (notifications currently poll every 30s, which works reliably without extra infra).
+
+Set `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET` in `server/.env` to enable file uploads (course materials, assignment submissions). Without these set, the app still runs — upload attempts return a clear "not configured" error instead of crashing.
 
 ## Tech Stack
 

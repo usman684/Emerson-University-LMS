@@ -20,6 +20,7 @@ import hostelRoutes from "./routes/hostel.routes.js";
 import transportRoutes from "./routes/transport.routes.js";
 import analyticsRoutes from "./routes/analytics.routes.js";
 import threadRoutes from "./routes/thread.routes.js";
+import uploadRoutes from "./routes/upload.routes.js";
 import eventRoutes from "./routes/event.routes.js";
 import cmsRoutes from "./routes/cms.routes.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.middleware.js";
@@ -76,6 +77,7 @@ app.use("/api/hostels", hostelRoutes);
 app.use("/api/transport", transportRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/threads", threadRoutes);
+app.use("/api/upload", uploadRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/cms", cmsRoutes);
 

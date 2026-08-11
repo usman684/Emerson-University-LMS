@@ -9,6 +9,7 @@ import {
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../features/auth/authSlice";
 import CourseCard from "../../components/dashboard/CourseCard";
+import CourseMaterials from "../../components/dashboard/CourseMaterials";
 import Input from "../../components/ui/Input";
 
 const StudentCoursesPage = () => {
@@ -107,14 +108,20 @@ const StudentCoursesPage = () => {
           {courses.map((course) => {
             const enrolled = isEnrolled(course);
             return (
-              <CourseCard
-                key={course._id}
-                course={course}
-                actionLabel={enrolled ? "Drop" : "Enroll"}
-                actionVariant={enrolled ? "danger" : "primary"}
-                actionLoading={actingId === course._id && (enrolling || dropping)}
-                onAction={() => (enrolled ? handleDrop(course._id) : handleEnroll(course._id))}
-              />
+              <div key={course._id} className="flex flex-col gap-0">
+                <CourseCard
+                  course={course}
+                  actionLabel={enrolled ? "Drop" : "Enroll"}
+                  actionVariant={enrolled ? "danger" : "primary"}
+                  actionLoading={actingId === course._id && (enrolling || dropping)}
+                  onAction={() => (enrolled ? handleDrop(course._id) : handleEnroll(course._id))}
+                />
+                {tab === "mine" && enrolled && (
+                  <div className="-mt-3 rounded-b-2xl border border-t-0 border-slate-200 bg-white px-5 pb-4 dark:border-slate-800 dark:bg-slate-900">
+                    <CourseMaterials courseId={course._id} canManage={false} />
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>

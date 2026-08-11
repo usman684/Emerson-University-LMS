@@ -9,6 +9,15 @@ export const notFound = (req, res, next) => {
 export const errorHandler = (err, req, res, next) => {
   let error = err;
 
+  // Multer file upload errors
+  if (err.name === "MulterError") {
+    const messages = {
+      LIMIT_FILE_SIZE: "File is too large. Maximum size is 15MB.",
+      LIMIT_UNEXPECTED_FILE: "Unexpected file field.",
+    };
+    error = new ApiError(400, messages[err.code] || `Upload error: ${err.message}`);
+  }
+
   // Mongoose bad ObjectId
   if (err.name === "CastError") {
     error = new ApiError(404, `Resource not found — invalid ${err.path}`);
