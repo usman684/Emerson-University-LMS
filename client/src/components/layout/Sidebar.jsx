@@ -16,6 +16,8 @@ import {
   Bus,
   BarChart3,
   MessageSquare,
+  CalendarDays,
+  Globe,
   X,
 } from "lucide-react";
 import { ROLES } from "../../lib/roles";
@@ -32,6 +34,7 @@ const navByRole = {
     { to: "/dashboard/student/hostel", label: "Hostel", icon: Home },
     { to: "/dashboard/student/transport", label: "Transport", icon: Bus },
     { to: "/dashboard/student/forum", label: "Forum", icon: MessageSquare },
+    { to: "/dashboard/student/calendar", label: "Calendar", icon: CalendarDays },
   ],
   [ROLES.TEACHER]: [
     { to: "/dashboard/teacher", label: "Overview", icon: LayoutDashboard, end: true },
@@ -40,6 +43,7 @@ const navByRole = {
     { to: "/dashboard/teacher/assignments", label: "Assignments", icon: ClipboardList },
     { to: "/dashboard/teacher/grades", label: "Grades", icon: Award },
     { to: "/dashboard/teacher/forum", label: "Forum", icon: MessageSquare },
+    { to: "/dashboard/teacher/calendar", label: "Calendar", icon: CalendarDays },
     { to: "/dashboard/teacher/students", label: "Students", icon: Users },
   ],
   [ROLES.ADMIN]: [
@@ -50,6 +54,8 @@ const navByRole = {
     { to: "/dashboard/admin/hostel", label: "Hostel", icon: Home },
     { to: "/dashboard/admin/transport", label: "Transport", icon: Bus },
     { to: "/dashboard/admin/analytics", label: "Analytics", icon: BarChart3 },
+    { to: "/dashboard/admin/calendar", label: "Calendar", icon: CalendarDays },
+    { to: "/dashboard/admin/cms", label: "Website CMS", icon: Globe },
     { to: "/dashboard/admin/users", label: "Users", icon: Users },
     { to: "/dashboard/admin/departments", label: "Departments", icon: Building2 },
     { to: "/dashboard/admin/settings", label: "Settings", icon: Settings },

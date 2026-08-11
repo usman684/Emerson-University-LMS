@@ -2,7 +2,7 @@
 
 A production-grade Learning Management System foundation for Emerson University, built with the MERN stack.
 
-> **Status:** Phase 2 complete. Auth, RBAC, User Management, Departments, and Courses (create, enroll/drop, materials, teacher/admin/student views) are fully working end-to-end. Attendance, Grades/CGPA, Fees, and other modules are planned for the next build phases.
+> **Status:** All core modules complete. Auth, RBAC, User Management, Departments, Courses, Attendance, Assignments/Quizzes/Grades/CGPA, Fees/Finance, Notifications, Library, Hostel, Transport, Analytics/Reports, Discussion Forum, Calendar, and Website CMS (announcements + editable public site sections) are fully working end-to-end. Remaining optional enhancements: Socket.io real-time push (notifications currently poll every 30s) and real Cloudinary file uploads (materials/submissions currently accept URL links).
 
 ## Tech Stack
 
