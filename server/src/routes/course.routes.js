@@ -4,6 +4,7 @@ import {
   getCourseById,
   createCourse,
   updateCourse,
+  assignCourseTeachers,
   deleteCourse,
   enrollInCourse,
   dropCourse,
@@ -31,6 +32,7 @@ router.post(
   createCourse
 );
 router.patch("/:id", restrictTo(ROLES.ADMIN, ROLES.REGISTRAR, ROLES.TEACHER), updateCourse);
+router.put("/:id/teachers", restrictTo(ROLES.ADMIN, ROLES.REGISTRAR), assignCourseTeachers);
 router.delete("/:id", restrictTo(ROLES.ADMIN, ROLES.REGISTRAR), deleteCourse);
 
 router.post("/:id/enroll", restrictTo(ROLES.STUDENT), enrollInCourse);

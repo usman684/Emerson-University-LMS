@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import ApiError from "../utils/ApiError.js";
 import Course from "../models/Course.model.js";
 import { ROLES } from "../config/roles.js";
+import { isCourseInstructor } from "../utils/courseAccess.js";
 
 // @desc    Get all courses (filterable, paginated)
 // @route   GET /api/courses
@@ -32,6 +33,7 @@ export const getCourses = asyncHandler(async (req, res) => {
     Course.find(filter)
       .populate("department", "name code")
       .populate("instructor", "firstName lastName email")
+      .populate("instructors", "firstName lastName email")
       .populate("enrolledStudents.student", "firstName lastName email")
       .select("-materials")
       .sort({ createdAt: -1 })
@@ -56,6 +58,7 @@ export const getCourseById = asyncHandler(async (req, res) => {
   const course = await Course.findById(req.params.id)
     .populate("department", "name code")
     .populate("instructor", "firstName lastName email")
+    .populate("instructors", "firstName lastName email")
     .populate("enrolledStudents.student", "firstName lastName email");
 
   if (!course) throw new ApiError(404, "Course not found");
@@ -68,7 +71,7 @@ export const getCourseById = asyncHandler(async (req, res) => {
 // @route   POST /api/courses
 // @access  Private/Admin,Registrar
 export const createCourse = asyncHandler(async (req, res) => {
-  const { title, code, description, creditHours, department, instructor, semester, year, capacity, schedule } =
+  const { title, code, description, creditHours, department, instructor, instructors, semester, year, capacity, schedule } =
     req.body;
 
   const exists = await Course.findOne({ code: code?.toUpperCase() });
@@ -81,6 +84,7 @@ export const createCourse = asyncHandler(async (req, res) => {
     creditHours,
     department,
     instructor,
+    instructors: Array.isArray(instructors) && instructors.length ? instructors : [instructor],
     semester,
     year,
     capacity,
@@ -97,10 +101,7 @@ export const updateCourse = asyncHandler(async (req, res) => {
   const course = await Course.findById(req.params.id);
   if (!course) throw new ApiError(404, "Course not found");
 
-  if (
-    req.user.role === ROLES.TEACHER &&
-    course.instructor.toString() !== req.user._id.toString()
-  ) {
+  if (req.user.role === ROLES.TEACHER && !isCourseInstructor(course, req.user._id)) {
     throw new ApiError(403, "You can only update courses you instruct");
   }
 
@@ -114,7 +115,7 @@ export const updateCourse = asyncHandler(async (req, res) => {
   ];
   // Admin/registrar can additionally reassign instructor/department
   if ([ROLES.ADMIN, ROLES.REGISTRAR].includes(req.user.role)) {
-    allowedFields.push("instructor", "department", "semester", "year", "code");
+    allowedFields.push("instructor", "instructors", "department", "semester", "year", "code");
   }
 
   allowedFields.forEach((field) => {
@@ -124,6 +125,37 @@ export const updateCourse = asyncHandler(async (req, res) => {
   await course.save();
 
   res.status(200).json({ success: true, data: { course } });
+});
+
+// @desc    Assign multiple teachers to a course
+// @route   PUT /api/courses/:id/teachers
+// @access  Private/Admin,Registrar
+export const assignCourseTeachers = asyncHandler(async (req, res) => {
+  const { instructor, instructors = [] } = req.body;
+  const course = await Course.findById(req.params.id);
+  if (!course) throw new ApiError(404, "Course not found");
+
+  const ids = Array.isArray(instructors) ? instructors.filter(Boolean) : [];
+  const primary = instructor || ids[0] || course.instructor;
+  if (!primary) throw new ApiError(400, "At least one teacher is required");
+
+  const User = (await import("../models/User.model.js")).default;
+  const requested = [...new Set([primary.toString(), ...ids.map((id) => id.toString())])];
+  const teachers = await User.find({ _id: { $in: requested }, role: ROLES.TEACHER }).select("_id");
+  const validIds = teachers.map((t) => t._id.toString());
+  if (!validIds.includes(primary.toString())) throw new ApiError(400, "Primary instructor must be a teacher");
+  if (validIds.length !== requested.length) throw new ApiError(400, "All assigned teaching staff must be active teacher accounts");
+
+  course.instructor = primary;
+  course.instructors = requested;
+  await course.save();
+
+  const updated = await Course.findById(course._id)
+    .populate("department", "name code")
+    .populate("instructor", "firstName lastName email")
+    .populate("instructors", "firstName lastName email");
+
+  res.status(200).json({ success: true, message: "Teaching staff updated successfully", data: { course: updated } });
 });
 
 // @desc    Delete a course (soft delete)
@@ -190,10 +222,7 @@ export const addMaterial = asyncHandler(async (req, res) => {
   const course = await Course.findById(req.params.id);
   if (!course) throw new ApiError(404, "Course not found");
 
-  if (
-    req.user.role === ROLES.TEACHER &&
-    course.instructor.toString() !== req.user._id.toString()
-  ) {
+  if (req.user.role === ROLES.TEACHER && !isCourseInstructor(course, req.user._id)) {
     throw new ApiError(403, "You can only add materials to courses you instruct");
   }
 
@@ -210,10 +239,7 @@ export const removeMaterial = asyncHandler(async (req, res) => {
   const course = await Course.findById(req.params.id);
   if (!course) throw new ApiError(404, "Course not found");
 
-  if (
-    req.user.role === ROLES.TEACHER &&
-    course.instructor.toString() !== req.user._id.toString()
-  ) {
+  if (req.user.role === ROLES.TEACHER && !isCourseInstructor(course, req.user._id)) {
     throw new ApiError(403, "You can only remove materials from courses you instruct");
   }
 

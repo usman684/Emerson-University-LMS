@@ -1,0 +1,26 @@
+EMERSON UNIVERSITY LMS - QUICK DEPLOYMENT
+
+LOCAL
+1) server: npm install && npm run dev
+2) client: npm install && npm run dev
+3) seed: http://localhost:5000/api/dev/seed
+4) website: http://localhost:5173/
+
+VERCEL
+- Deploy client/ as one Vercel project.
+- Deploy server/ as a second Vercel project.
+- Set VITE_API_URL on client to https://YOUR-BACKEND.vercel.app/api
+- Set CLIENT_URL on backend to https://YOUR-FRONTEND.vercel.app
+- Set MONGO_URI + JWT secrets on backend.
+- For uploads set VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET on frontend.
+- Set VITE_ENABLE_SOCKET=false on Vercel.
+- See VERCEL_DEPLOYMENT.md for full details.
+
+DEMO ACCOUNTS
+admin@emerson.edu / Admin@12345
+registrar@emerson.edu / Registrar@12345
+teacher@emerson.edu / Teacher@12345
+teacher2@emerson.edu / Teacher2@12345
+student@emerson.edu / Student@12345
+student2@emerson.edu / Student2@12345
+student3@emerson.edu / Student3@12345

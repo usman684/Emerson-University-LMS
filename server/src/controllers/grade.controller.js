@@ -4,12 +4,13 @@ import Grade from "../models/Grade.model.js";
 import { scoreToGrade } from "../models/Grade.model.js";
 import Course from "../models/Course.model.js";
 import { ROLES } from "../config/roles.js";
+import { isCourseInstructor } from "../utils/courseAccess.js";
 import { notifyUser } from "../services/notification.service.js";
 
 const assertCanManage = (course, user) => {
   if (
     user.role === ROLES.TEACHER &&
-    course.instructor.toString() !== user._id.toString()
+    !isCourseInstructor(course, user._id)
   ) {
     throw new ApiError(403, "You can only assign grades for courses you instruct");
   }

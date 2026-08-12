@@ -2,6 +2,10 @@ import { apiSlice } from "../api/apiSlice";
 
 export const cmsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getPublicAnnouncements: builder.query({
+      query: () => ({ url: "/cms/announcements/public", method: "GET" }),
+      providesTags: [{ type: "Announcement", id: "PUBLIC" }],
+    }),
     getAllAnnouncements: builder.query({
       query: () => ({ url: "/cms/announcements", method: "GET" }),
       providesTags: [{ type: "Announcement", id: "LIST" }],
@@ -30,6 +34,7 @@ export const cmsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetPublicAnnouncementsQuery,
   useGetAllAnnouncementsQuery,
   useCreateAnnouncementMutation,
   useUpdateAnnouncementMutation,

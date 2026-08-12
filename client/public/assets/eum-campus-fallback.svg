@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Emerson University inspired campus illustration">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b2b62"/><stop offset="1" stop-color="#06152e"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dbeafe"/><stop offset="1" stop-color="#8fb5dc"/></linearGradient>
+    <linearGradient id="brick" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a86b38"/><stop offset="1" stop-color="#6e3e25"/></linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1250" cy="180" r="100" fill="#f5c35b" opacity=".28"/>
+  <path d="M0 610 Q350 500 700 610 T1400 590 T1600 610 V900 H0Z" fill="#0a2348"/>
+  <path d="M0 700 Q400 620 800 700 T1600 690 V900 H0Z" fill="#123d55"/>
+  <g transform="translate(150 270)">
+    <rect x="0" y="230" width="520" height="270" rx="10" fill="#e7edf4"/>
+    <rect x="60" y="130" width="400" height="100" rx="8" fill="#f4f7fb"/>
+    <rect x="115" y="40" width="290" height="100" rx="8" fill="#dce6f1"/>
+    <g fill="url(#glass)">
+      <path d="M35 260h60v70H35zM125 260h60v70h-60zM215 260h60v70h-60zM305 260h60v70h-60zM395 260h60v70h-60z"/>
+      <path d="M35 360h60v70H35zM125 360h60v70h-60zM215 360h60v70h-60zM305 360h60v70h-60zM395 360h60v70h-60z"/>
+      <path d="M145 60h55v55h-55zM225 60h55v55h-55zM305 60h55v55h-55z"/>
+    </g>
+    <rect x="210" y="390" width="100" height="110" fill="#b07b3c"/>
+    <path d="M185 390h150l-75-80z" fill="#9a5e31"/>
+    <text x="260" y="455" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="18" font-weight="700">EUM</text>
+  </g>
+  <g transform="translate(800 360)">
+    <rect width="610" height="230" rx="18" fill="#eef3f8" opacity=".95"/>
+    <rect x="30" y="35" width="550" height="45" rx="7" fill="url(#brick)"/>
+    <rect x="75" y="95" width="460" height="95" rx="10" fill="#d7e0e8"/>
+    <g fill="#88acd0">
+      <rect x="100" y="110" width="55" height="60"/><rect x="180" y="110" width="55" height="60"/><rect x="260" y="110" width="55" height="60"/><rect x="340" y="110" width="55" height="60"/><rect x="420" y="110" width="55" height="60"/>
+    </g>
+    <text x="305" y="66" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="24" font-weight="800">EMERSON UNIVERSITY MULTAN</text>
+  </g>
+  <g fill="#b07b3c" opacity=".8"><circle cx="100" cy="760" r="55"/><circle cx="1510" cy="770" r="70"/><circle cx="680" cy="790" r="45"/></g>
+</svg>

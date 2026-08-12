@@ -39,7 +39,7 @@ export const createFee = asyncHandler(async (req, res) => {
   await notifyUser({
     recipient: student,
     title: "New fee challan issued",
-    message: `A ${feeType} fee of $${amount} has been issued. Due ${new Date(dueDate).toLocaleDateString()}.`,
+    message: `A ${feeType} fee of Rs. ${amount} has been issued. Due ${new Date(dueDate).toLocaleDateString()}.`,
     type: "fee",
     link: "/dashboard/student/fees",
   });
@@ -119,7 +119,7 @@ export const getMyFees = asyncHandler(async (req, res) => {
 // @route   POST /api/fees/:id/pay
 // @access  Private/Student(own fee)
 export const payFee = asyncHandler(async (req, res) => {
-  const { paymentMethod } = req.body;
+  const { paymentMethod, paymentReference } = req.body;
 
   const fee = await Fee.findById(req.params.id);
   if (!fee) throw new ApiError(404, "Fee record not found");
@@ -140,6 +140,7 @@ export const payFee = asyncHandler(async (req, res) => {
   fee.paidAt = new Date();
   fee.paymentMethod = paymentMethod || "card";
   fee.transactionId = `TXN-${Date.now()}-${crypto.randomBytes(2).toString("hex")}`;
+  fee.paymentReference = paymentReference || "";
   await fee.save();
 
   res.status(200).json({ success: true, message: "Payment recorded successfully", data: { fee } });

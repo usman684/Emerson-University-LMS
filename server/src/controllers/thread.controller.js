@@ -3,9 +3,10 @@ import ApiError from "../utils/ApiError.js";
 import Thread from "../models/Thread.model.js";
 import Course from "../models/Course.model.js";
 import { ROLES } from "../config/roles.js";
+import { isCourseInstructor } from "../utils/courseAccess.js";
 
 const isMember = (course, userId, role) => {
-  if (role === ROLES.TEACHER) return course.instructor.toString() === userId.toString();
+  if (role === ROLES.TEACHER) return isCourseInstructor(course, userId);
   if (role === ROLES.STUDENT) {
     return course.enrolledStudents.some(
       (e) => e.student.toString() === userId.toString() && e.status === "active"
@@ -114,7 +115,7 @@ export const togglePin = asyncHandler(async (req, res) => {
   const course = await Course.findById(thread.course);
   if (
     req.user.role === ROLES.TEACHER &&
-    course.instructor.toString() !== req.user._id.toString()
+    !isCourseInstructor(course, req.user._id)
   ) {
     throw new ApiError(403, "You can only manage discussions for courses you instruct");
   }
@@ -135,7 +136,7 @@ export const toggleLock = asyncHandler(async (req, res) => {
   const course = await Course.findById(thread.course);
   if (
     req.user.role === ROLES.TEACHER &&
-    course.instructor.toString() !== req.user._id.toString()
+    !isCourseInstructor(course, req.user._id)
   ) {
     throw new ApiError(403, "You can only manage discussions for courses you instruct");
   }
@@ -156,7 +157,7 @@ export const deleteThread = asyncHandler(async (req, res) => {
   const course = await Course.findById(thread.course);
   const isAuthor = thread.author.toString() === req.user._id.toString();
   const isInstructor =
-    req.user.role === ROLES.TEACHER && course.instructor.toString() === req.user._id.toString();
+    req.user.role === ROLES.TEACHER && isCourseInstructor(course, req.user._id);
   const isAdmin = req.user.role === ROLES.ADMIN;
 
   if (!isAuthor && !isInstructor && !isAdmin) {

@@ -37,10 +37,11 @@ const feeSchema = new mongoose.Schema(
     paidAt: { type: Date, default: null },
     paymentMethod: {
       type: String,
-      enum: ["card", "bank_transfer", "cash", "other", ""],
+      enum: ["card", "bank_transfer", "cash", "jazzcash", "easypaisa", "upaisa", "bank_hbl", "bank_meezan", "bank_mcb", "bank_ubl", "bank_bop", "other", ""],
       default: "",
     },
     transactionId: { type: String, default: "" },
+    paymentReference: { type: String, default: "", trim: true },
     invoiceNumber: {
       type: String,
       unique: true,

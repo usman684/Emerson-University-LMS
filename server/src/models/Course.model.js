@@ -36,11 +36,16 @@ const courseSchema = new mongoose.Schema(
       ref: "Department",
       required: [true, "Department is required"],
     },
+    // Primary instructor is retained for backwards compatibility and display.
     instructor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: [true, "Instructor is required"],
     },
+    // A single course may be taught by multiple teachers.
+    instructors: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    ],
     semester: {
       type: String,
       enum: ["Fall", "Spring", "Summer"],
@@ -85,6 +90,19 @@ const courseSchema = new mongoose.Schema(
 
 courseSchema.index({ code: 1 }, { unique: true });
 courseSchema.index({ department: 1, semester: 1, year: 1 });
+courseSchema.index({ instructors: 1 });
+
+courseSchema.pre("validate", function (next) {
+  const all = [this.instructor, ...(this.instructors || [])].filter(Boolean);
+  const seen = new Set();
+  this.instructors = all.filter((id) => {
+    const key = id.toString();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+  next();
+});
 
 courseSchema.virtual("enrolledCount").get(function () {
   return this.enrolledStudents.filter((e) => e.status === "active").length;

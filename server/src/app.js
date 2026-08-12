@@ -23,6 +23,7 @@ import threadRoutes from "./routes/thread.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
 import eventRoutes from "./routes/event.routes.js";
 import cmsRoutes from "./routes/cms.routes.js";
+import devRoutes from "./routes/dev.routes.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.middleware.js";
 import { globalLimiter } from "./middleware/rateLimiter.middleware.js";
 
@@ -36,9 +37,17 @@ app.use(
   })
 );
 
+const allowedOrigins = (process.env.CLIENT_URLS || process.env.CLIENT_URL || "http://localhost:5173")
+  .split(",")
+  .map((value) => value.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes("*")) return callback(null, true);
+      return callback(new Error("CORS origin is not allowed"));
+    },
     credentials: true,
   })
 );
@@ -46,6 +55,7 @@ app.use(
 app.use(compression());
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+app.use("/uploads", express.static("uploads", { maxAge: "1d" }));
 app.use(cookieParser());
 app.use(mongoSanitize());
 
@@ -80,6 +90,7 @@ app.use("/api/threads", threadRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/cms", cmsRoutes);
+app.use("/api/dev", devRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

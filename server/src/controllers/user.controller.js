@@ -76,6 +76,9 @@ export const updateUser = asyncHandler(async (req, res) => {
     "department",
     "phone",
   ];
+  if (req.params.id === req.user._id.toString() && ((req.body.role && req.body.role !== "admin") || req.body.isActive === false)) {
+    throw new ApiError(400, "You cannot deactivate or remove administrator access from your own account");
+  }
   const updates = {};
   allowedFields.forEach((field) => {
     if (req.body[field] !== undefined) updates[field] = req.body[field];

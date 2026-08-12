@@ -3,13 +3,14 @@ import ApiError from "../utils/ApiError.js";
 import Thread from "../models/Thread.model.js";
 import Course from "../models/Course.model.js";
 import { ROLES } from "../config/roles.js";
+import { isCourseInstructor } from "../utils/courseAccess.js";
 
 // A user can access a course's forum if they're the instructor, enrolled, or staff (admin/registrar)
 const assertCourseAccess = (course, user) => {
   if ([ROLES.ADMIN, ROLES.REGISTRAR].includes(user.role)) return;
 
   if (user.role === ROLES.TEACHER) {
-    if (course.instructor.toString() !== user._id.toString()) {
+    if (!isCourseInstructor(course, user._id)) {
       throw new ApiError(403, "You do not have access to this course's forum");
     }
     return;
@@ -122,7 +123,7 @@ export const markAsAnswer = asyncHandler(async (req, res) => {
   const course = await Course.findById(thread.course);
   if (
     req.user.role === ROLES.TEACHER &&
-    course.instructor.toString() !== req.user._id.toString()
+    !isCourseInstructor(course, req.user._id)
   ) {
     throw new ApiError(403, "You can only manage threads in courses you instruct");
   }
@@ -145,7 +146,7 @@ export const updateThread = asyncHandler(async (req, res) => {
   const course = await Course.findById(thread.course);
   if (
     req.user.role === ROLES.TEACHER &&
-    course.instructor.toString() !== req.user._id.toString()
+    !isCourseInstructor(course, req.user._id)
   ) {
     throw new ApiError(403, "You can only manage threads in courses you instruct");
   }
@@ -171,7 +172,7 @@ export const deleteThread = asyncHandler(async (req, res) => {
   const isAuthor = thread.author.toString() === req.user._id.toString();
   const isModerator =
     [ROLES.ADMIN].includes(req.user.role) ||
-    (req.user.role === ROLES.TEACHER && course.instructor.toString() === req.user._id.toString());
+    (req.user.role === ROLES.TEACHER && isCourseInstructor(course, req.user._id));
 
   if (!isAuthor && !isModerator) {
     throw new ApiError(403, "You do not have permission to delete this thread");

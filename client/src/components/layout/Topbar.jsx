@@ -27,7 +27,7 @@ const Topbar = ({ user, onMenuClick }) => {
     setAccessToken(null);
     dispatch(clearCredentials());
     toast.success("Logged out successfully");
-    navigate("/login");
+    navigate("/");
   };
 
   const initials = `${user?.firstName?.[0] || ""}${user?.lastName?.[0] || ""}`.toUpperCase();

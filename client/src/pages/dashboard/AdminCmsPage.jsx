@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Plus, X, Trash2, Megaphone, Globe } from "lucide-react";
+import { Plus, X, Trash2, Megaphone, Globe, HelpCircle } from "lucide-react";
 
 import {
   useGetAllAnnouncementsQuery,
@@ -19,6 +19,8 @@ const SITE_SECTIONS = [
   { key: "about", label: "About the University" },
   { key: "contact", label: "Contact Information" },
 ];
+
+const FAQ_KEYS = [1,2,3,4,5,6].map((n) => ({ key: `faq_${n}`, label: `FAQ ${n}` }));
 
 const SectionEditor = ({ sectionKey, label, existing }) => {
   const [upsertSection, { isLoading }] = useUpsertSectionMutation();
@@ -103,6 +105,7 @@ const AdminCmsPage = () => {
         {[
           { key: "announcements", label: "Announcements", icon: Megaphone },
           { key: "sections", label: "Site Content", icon: Globe },
+          { key: "faqs", label: "FAQs", icon: HelpCircle },
         ].map((t) => (
           <button
             key={t.key}
@@ -178,6 +181,24 @@ const AdminCmsPage = () => {
             )}
           </div>
         </>
+      )}
+
+
+      {tab === "faqs" && (
+        <div className="flex flex-col gap-4">
+          <div>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white">FAQ Manager</h2>
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">These questions and answers appear on the public website FAQ page and the homepage accordion.</p>
+          </div>
+          {FAQ_KEYS.map((s) => (
+            <SectionEditor
+              key={s.key}
+              sectionKey={s.key}
+              label={s.label}
+              existing={sections.find((sec) => sec.key === s.key)}
+            />
+          ))}
+        </div>
       )}
 
       {tab === "sections" && (

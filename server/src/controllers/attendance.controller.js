@@ -3,6 +3,7 @@ import ApiError from "../utils/ApiError.js";
 import Attendance from "../models/Attendance.model.js";
 import Course from "../models/Course.model.js";
 import { ROLES } from "../config/roles.js";
+import { isCourseInstructor } from "../utils/courseAccess.js";
 
 const normalizeDate = (date) => {
   const d = new Date(date);
@@ -13,7 +14,7 @@ const normalizeDate = (date) => {
 const assertCanManage = (course, user) => {
   if (
     user.role === ROLES.TEACHER &&
-    course.instructor.toString() !== user._id.toString()
+    !isCourseInstructor(course, user._id)
   ) {
     throw new ApiError(403, "You can only manage attendance for courses you instruct");
   }

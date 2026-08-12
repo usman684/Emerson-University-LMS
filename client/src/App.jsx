@@ -2,8 +2,9 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { selectCurrentUser } from "./features/auth/authSlice";
-import { dashboardPathForRole, ROLES } from "./lib/roles";
+import { ROLES } from "./lib/roles";
 
+import { HomePage, AboutPage, ProgramsPage, AdmissionsPage, FeeStructurePage, ContactPage, FaqPage } from "./pages/PublicSite";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
@@ -36,20 +37,24 @@ import AdminAnalyticsPage from "./pages/dashboard/AdminAnalyticsPage";
 import ForumPage from "./pages/dashboard/ForumPage";
 import CalendarPage from "./pages/dashboard/CalendarPage";
 import AdminCmsPage from "./pages/dashboard/AdminCmsPage";
+import AdminUsersPage from "./pages/dashboard/AdminUsersPage";
+import AdminDepartmentsPage from "./pages/dashboard/AdminDepartmentsPage";
+import AdminSettingsPage from "./pages/dashboard/AdminSettingsPage";
+import TeacherStudentsPage from "./pages/dashboard/TeacherStudentsPage";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import RoleRoute from "./routes/RoleRoute";
 
-const RootRedirect = () => {
-  const user = useSelector(selectCurrentUser);
-  if (!user) return <Navigate to="/login" replace />;
-  return <Navigate to={dashboardPathForRole(user.role)} replace />;
-};
-
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<RootRedirect />} />
+      <Route path="/" element={<HomePage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/programs" element={<ProgramsPage />} />
+      <Route path="/admissions" element={<AdmissionsPage />} />
+      <Route path="/fee-structure" element={<FeeStructurePage />} />
+      <Route path="/contact" element={<ContactPage />} />
+      <Route path="/faqs" element={<FaqPage />} />
 
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
@@ -80,6 +85,7 @@ function App() {
             <Route path="/dashboard/teacher/grades" element={<TeacherGradesPage />} />
             <Route path="/dashboard/teacher/forum" element={<ForumPage />} />
             <Route path="/dashboard/teacher/calendar" element={<CalendarPage />} />
+            <Route path="/dashboard/teacher/students" element={<TeacherStudentsPage />} />
           </Route>
 
           <Route element={<RoleRoute allowedRoles={[ROLES.ADMIN]} />}>
@@ -92,6 +98,9 @@ function App() {
             <Route path="/dashboard/admin/analytics" element={<AdminAnalyticsPage />} />
             <Route path="/dashboard/admin/calendar" element={<CalendarPage />} />
             <Route path="/dashboard/admin/cms" element={<AdminCmsPage />} />
+            <Route path="/dashboard/admin/users" element={<AdminUsersPage />} />
+            <Route path="/dashboard/admin/departments" element={<AdminDepartmentsPage />} />
+            <Route path="/dashboard/admin/settings" element={<AdminSettingsPage />} />
           </Route>
 
           <Route element={<RoleRoute allowedRoles={[ROLES.REGISTRAR]} />}>

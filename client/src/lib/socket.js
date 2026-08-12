@@ -13,6 +13,7 @@ let socket = null;
  * a token is available; call disconnectSocket() on logout.
  */
 export const connectSocket = () => {
+  if (import.meta.env.VITE_ENABLE_SOCKET === "false") return null;
   const token = getAccessToken();
   if (!token) return null;
 
