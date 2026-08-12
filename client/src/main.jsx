@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import { store } from "./app/store";
 import { ThemeProvider } from "./context/ThemeContext";
 import AuthInitializer from "./routes/AuthInitializer";
+import SocketListener from "./routes/SocketListener";
 import App from "./App.jsx";
 import "./index.css";
 
@@ -16,6 +17,7 @@ createRoot(document.getElementById("root")).render(
       <ThemeProvider>
         <BrowserRouter>
           <AuthInitializer>
+            <SocketListener />
             <App />
             <Toaster richColors position="top-right" />
           </AuthInitializer>

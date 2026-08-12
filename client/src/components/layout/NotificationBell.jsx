@@ -34,7 +34,7 @@ const NotificationBell = () => {
 
   const { data } = useGetNotificationsQuery(
     { limit: 10 },
-    { pollingInterval: 30000 }
+    { pollingInterval: 120000 } // fallback safety net — Socket.io handles real-time updates
   );
   const [markRead] = useMarkNotificationReadMutation();
   const [markAllRead] = useMarkAllNotificationsReadMutation();
